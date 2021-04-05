@@ -3,7 +3,7 @@ const User = require("../../models/User");
 const router = express.Router();
 const auth = require("../middlewares/auth");
 const Sheet = require("../../models/Sheet");
-const puppeteer = require("puppeteer");
+
 /*
 route: [POST] /api/sheets/new
 params: title, maxCols, theme, corners, borders
