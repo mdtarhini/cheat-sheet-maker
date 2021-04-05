@@ -2,7 +2,7 @@
 
 A fullstack application to create and share tabulated cheat sheets using markdown syntax. The backend is developed with node-JS, express-JS and mongo-db while the frontend is developed with React.
 
-**[Checkout the website](url)**.
+**[Checkout the website](https://cheatsheet-maker.herokuapp.com/)**.
 
 ## Features
 
