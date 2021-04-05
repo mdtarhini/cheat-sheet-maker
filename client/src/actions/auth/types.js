@@ -1,0 +1,12 @@
+export const SIGN_UP_FAILED = "SIGN_UP_FAILED";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_FAILED = "SIGN_IN_FAILED";
+export const USER_LOADED = "USER_LOADED";
+export const USER_NOT_LOADED = "USER_NOT_LOADED";
+export const SIGN_OUT = "SIGN_OUT";
+export const USER_EDITED = "USER_EDITED";
+export const USER_NOT_EDITED = "USER_NOT_EDITED";
+export const TOGGLE_IS_SIGNUP = "TOGGLE_IS_SIGNUP";
+export const USER_DELETED = "USER_DELETED";
+export const USER_NOT_DELETED = "USER_NOT_DELETED";

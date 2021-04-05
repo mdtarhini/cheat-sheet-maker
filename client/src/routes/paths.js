@@ -1,0 +1,9 @@
+export const USER_PATH = "/user";
+export const HOME_PATH = "/";
+export const MANAGE_ACCOUNT_PATH = "/manage-account";
+export const FAVORITES_PATH = "/favorites";
+export const SHEET_MAKER_PATH = "/sheet-maker";
+export const NEW_SHEET_PATH = "/new-sheet";
+export const SHEET_SETTINGS_PATH = "/sheet-settings";
+export const SHEET_PATH = "/sheet";
+export const SHEET_PREVIEW_PATH = "/sheet-preview";
