@@ -7,7 +7,7 @@ import { useModal } from "../common/Modal/useModal";
 import { connect } from "react-redux";
 import { toggleFavorites } from "../../actions/sheets";
 //router
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { USER_PATH, SHEET_PATH, SHEET_MAKER_PATH } from "../../routes/paths";
 //icons
 import { AiOutlineStar, AiFillStar, AiOutlineEdit } from "react-icons/ai";
@@ -16,7 +16,7 @@ import { IoMdShareAlt } from "react-icons/io";
 //others
 import { getFormattedElpasedTime } from "../../helpers";
 
-const Card = ({ sheet, auth, toggleFavorites }) => {
+const Card = ({ sheet, auth, toggleFavorites, location }) => {
   const {
     title,
     cells,
@@ -32,6 +32,12 @@ const Card = ({ sheet, auth, toggleFavorites }) => {
 
   const stringifyCellTitles = () => {
     return cells.map((cell) => cell.title).join(", ");
+  };
+
+  //Save the current path so it can be accessed later
+  const toSheetMaker = {
+    pathname: `${SHEET_MAKER_PATH}/${sheet._id}`,
+    state: { prevPathname: location.pathname },
   };
 
   const infoBar = () => {
@@ -73,7 +79,7 @@ const Card = ({ sheet, auth, toggleFavorites }) => {
           {/* Editor */}
           {auth?.user?._id === sheet?.authorId && (
             <Link
-              to={`${SHEET_MAKER_PATH}/${sheet._id}`}
+              to={toSheetMaker}
               className="w-1/2 h-9 flex justify-center items-center bg-gray-200 border-l border-r border-blue-200 transition duration-300 ease-in-out hover:opacity-70 focus-yellow"
             >
               <span className="sr-only">Edit sheet</span>
@@ -113,7 +119,7 @@ const Card = ({ sheet, auth, toggleFavorites }) => {
             {getFormattedElpasedTime(new Date(createdAt))}
           </p>
           <Link
-            to={`${SHEET_MAKER_PATH}/${sheet._id}`}
+            to={toSheetMaker}
             className="w-1/2 h-9 flex justify-center items-center bg-gray-200 border-l border-blue-200 transition duration-300 ease-in-out hover:opacity-70 focus-yellow"
           >
             <span className="sr-only">Edit sheet</span>
@@ -126,25 +132,23 @@ const Card = ({ sheet, auth, toggleFavorites }) => {
   return (
     <div
       className={`w-full rounded-3xl bg-white shadow-md text-gray-700 flex flex-col overflow-hidden relative 
-      ${published ? "h-64" : "h-44"}`}
+      ${published ? "h-64" : "h-36"}`}
     >
       <Link
-        to={
-          published
-            ? `${SHEET_PATH}/${sheet._id}`
-            : `${SHEET_MAKER_PATH}/${sheet._id}`
-        }
+        to={published ? `${SHEET_PATH}/${sheet._id}` : toSheetMaker}
         className="flex-grow rounded-t-3xl transition duration-150 ease-in-out hover:bg-gray-50 transform  focus-yellow"
       >
         <div className="px-5 py-4">
           <h3 className="text-lg font-semibold line-clamp-2">{title} </h3>
 
-          <p className="leading-relaxed font-semibold text-gray-500 text-sm mt-1 line-clamp-4 ">
-            <span className=" text-blue-500 text-sm">
-              {cells.length} cell{cells.length !== 1 && "s"}:{" "}
-            </span>
-            {stringifyCellTitles()}
-          </p>
+          {published && (
+            <p className="leading-relaxed font-semibold text-gray-500 text-sm mt-1 line-clamp-4 ">
+              <span className=" text-blue-500 text-sm">
+                {cells.length} cell{cells.length !== 1 && "s"}:{" "}
+              </span>
+              {stringifyCellTitles()}
+            </p>
+          )}
         </div>
       </Link>
 
@@ -165,4 +169,4 @@ const Card = ({ sheet, auth, toggleFavorites }) => {
 const mapStateToProps = (state) => {
   return { auth: state.auth };
 };
-export default connect(mapStateToProps, { toggleFavorites })(Card);
+export default connect(mapStateToProps, { toggleFavorites })(withRouter(Card));

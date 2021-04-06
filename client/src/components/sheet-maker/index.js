@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 //redux
 import { connect } from "react-redux";
 import { getAndSetSheet } from "../../actions/sheet-maker";
+
 //components
 import Layout from "../common/Layout";
 import Button from "../common/Button";
@@ -111,6 +112,7 @@ const SheetMaker = ({
       }
     }
   };
+
   return <Layout>{conditionalRender()}</Layout>;
 };
 

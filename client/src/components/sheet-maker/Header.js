@@ -7,8 +7,9 @@ import Button from "../common/Button";
 import { connect } from "react-redux";
 import { updateSheet, deleteSheet } from "../../actions/sheet-maker";
 //router
+import { withRouter } from "react-router-dom";
 import history from "../../history";
-import { SHEET_SETTINGS_PATH } from "../../routes/paths";
+import { SHEET_SETTINGS_PATH, HOME_PATH } from "../../routes/paths";
 //icons
 import {
   AiOutlineMenu,
@@ -26,6 +27,7 @@ const Header = ({
   ongoingOnServer,
   updateSheet,
   deleteSheet,
+  location,
 }) => {
   const { cells, title, published } = sheetMaker;
 
@@ -48,7 +50,11 @@ const Header = ({
         label: "Save and quit",
         color: "gray",
         func: () => {
-          updateSheet(sheetId, { cells }, "/");
+          updateSheet(
+            sheetId,
+            { cells },
+            location.state.prevPathname || HOME_PATH
+          );
         },
         icon: <AiFillSave />,
       },
@@ -77,7 +83,11 @@ const Header = ({
             label: "Unpublish",
             color: "yellow",
             func: () => {
-              updateSheet(sheetId, { cells, published: false }, "/");
+              updateSheet(
+                sheetId,
+                { cells, published: false },
+                location.state.prevPathname || HOME_PATH
+              );
             },
             icon: <AiOutlineClose />,
           },
@@ -153,7 +163,9 @@ const Header = ({
       {expanded && expandedHeader()}
 
       <RenderDeleteModal
-        onOk={() => deleteSheet(sheetId)}
+        onOk={() =>
+          deleteSheet(sheetId, location.state.prevPathname || HOME_PATH)
+        }
         icon={<AiFillDelete />}
         loading={ongoingOnServer["deleting-sheet"]}
         title={<span>Are you sure you want to delete this sheet ? </span>}
@@ -169,4 +181,6 @@ const mapStateToProps = (state) => {
     ongoingOnServer: state.ongoingOnServer,
   };
 };
-export default connect(mapStateToProps, { updateSheet, deleteSheet })(Header);
+export default connect(mapStateToProps, { updateSheet, deleteSheet })(
+  withRouter(Header)
+);

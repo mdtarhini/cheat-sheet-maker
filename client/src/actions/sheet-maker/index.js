@@ -17,7 +17,7 @@ import {
   DELETE_SHEET_SUCCESS,
   DELETE_SHEET_FAILED,
 } from "./types";
-import { HOME_PATH, SHEET_MAKER_PATH } from "../../routes/paths";
+import { SHEET_MAKER_PATH } from "../../routes/paths";
 import axios from "axios";
 import { tokenConfig } from "../auth";
 import history from "../../history";
@@ -140,14 +140,14 @@ export const updateSheet = (sheetId, updatedValues, pathAfterSaving) => {
   };
 };
 
-export const deleteSheet = (sheetId) => {
+export const deleteSheet = (sheetId, pathnameAfterDelete) => {
   return (dispatch, getState) => {
     dispatch(setOnoingServerActivity({ "deleting-sheet": true }));
     return axios
       .delete(`/api/sheets/${sheetId}`, tokenConfig(getState().auth?.token))
       .then(() => {
         dispatch({ type: DELETE_SHEET_SUCCESS, payload: sheetId });
-        history.push(HOME_PATH);
+        history.push(pathnameAfterDelete);
       })
       .catch(() => {
         dispatch({ type: DELETE_SHEET_FAILED, payload: sheetId });
