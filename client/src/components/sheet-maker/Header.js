@@ -53,7 +53,7 @@ const Header = ({
           updateSheet(
             sheetId,
             { cells },
-            location.state.prevPathname || HOME_PATH
+            location?.state?.prevPathname || HOME_PATH
           );
         },
         icon: <AiFillSave />,
@@ -86,7 +86,7 @@ const Header = ({
               updateSheet(
                 sheetId,
                 { cells, published: false },
-                location.state.prevPathname || HOME_PATH
+                location?.state?.prevPathname || HOME_PATH
               );
             },
             icon: <AiOutlineClose />,
@@ -164,7 +164,7 @@ const Header = ({
 
       <RenderDeleteModal
         onOk={() =>
-          deleteSheet(sheetId, location.state.prevPathname || HOME_PATH)
+          deleteSheet(sheetId, location?.state?.prevPathname || HOME_PATH)
         }
         icon={<AiFillDelete />}
         loading={ongoingOnServer["deleting-sheet"]}
